@@ -1,32 +1,34 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { Component } from "react";
 
-const App = () => {
+const App = () => (<Counter></Counter>);
 
-  const profiles = [
-    {name: "Taro", age: 10},
-    {name: "Hanako", age: 5}
-  ]
+class Counter extends Component {
+// constructorメソッドでインスタンスに対して初期化処理をしている
+  constructor(props){
+    super(props)
+// 初期値を設定している
+    this.state = { count: 1}
+  }
 
-  return(
-    <div>
-      {
-        profiles.map((profile, index) => {
-          return <User name={profile.name} age={profile.age} />
-        })
-      }
-    </div>
-  )
+  handlePlusButton = () => {
+// 状態を変えるときはsetStateを使う
+    this.setState({ count: this.state.count + 1})
+  }
+
+  handleMinusButton = () => {
+    this.setState({ count: this.state.count - 1})
+  }
+
+  render(){
+  return (
+    <React.Fragment>
+      <div>count: {this.state.count}</div>
+      {/* 参照するときはthis.state.fooの形 */}
+      <button onClick={this.handlePlusButton}>+1</button>
+      <button onClick={this.handleMinusButton}>-1</button>
+    </React.Fragment>
+    )
+  }
 }
-
-const User = (props) => {
-return <div>Hi! I am {props.name} {props.age} years old</div>;
-}
-
-User.propTypes = {
-  name: PropTypes.string,
-  age: PropTypes.number
-}
-
 
 export default App;
