@@ -1,8 +1,21 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 const App = props => {
   const [state, setState] = useState(props)
   const {name, price} = state
+
+  useEffect(() => {
+    console.log('This is like componentDidMount and componentDidUpdate')
+  })
+
+  useEffect(() => {
+    console.log('This is like componentDidMount')
+  }, [] )
+
+  useEffect(() => {
+    console.log('This callback is for specific process only')
+  }, [name] )
+
   return(
     <>
     <p>現在の{name}は{price}円です。</p>
