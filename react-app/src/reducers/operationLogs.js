@@ -1,7 +1,7 @@
 import {
     ADD_OPERATION_LOG,
     DELETE_ALL_OPERATION_LOGS
-} from '../action'
+} from '../actions'
 
 const operationLogs = (state = [], action) => {
     switch (action.type){
