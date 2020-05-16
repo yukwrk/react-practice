@@ -1,7 +1,8 @@
 import React, {useState, useContext} from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import {CREATE_EVENT ,DELETE_ALL_EVENTS} from '../actions'
+import {CREATE_EVENT ,DELETE_ALL_EVENTS,ADD_OPERATION_LOG,DELETE_ALL_OPERATION_LOGS} from '../actions'
 import AppContext from '../contexts/AppContext'
+import currentDateIso8601 from '../utils'
 
 const EventForm = () => {
 //   const [state, dispatch] = useReducer(reducer, [])
@@ -17,15 +18,28 @@ const EventForm = () => {
         title,
         body
       })
-      setTitle('')
-      setBody('')
+    dispatch({
+      type: ADD_OPERATION_LOG,
+      description: 'イベントを作成しました',
+      operatedAt: currentDateIso8601()
+    })
+
+    setTitle('')
+    setBody('')
   }
   const uncreatable = title === '' || body === ''
 
   const deleteAllEvents = e => {
     e.preventDefault()
     const result = window.confirm('本当に全てのイベントを削除してもよろしいですか？')
-    if(result) dispatch({type: DELETE_ALL_EVENTS})
+    if(result) {
+      dispatch({type: DELETE_ALL_EVENTS})
+      dispatch({
+        type: ADD_OPERATION_LOG,
+        description: '全てのイベントを削除しました',
+        operatedAt: currentDateIso8601()
+      })
+    }
   }
     return (
         <>
